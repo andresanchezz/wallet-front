@@ -20,12 +20,14 @@ export interface Transaction {
     type: TransactionType;
     amount: number;
     date: string;
+    direction: string;
     createdAt?: string;
     transferId?: string;
     category: {
         id: string,
         name: string,
         icon: string,
+        color: string,
     }
 }
 

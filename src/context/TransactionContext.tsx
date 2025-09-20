@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import { Transaction, TransactionResponse } from "../interfaces/transaction";
 import { handleApiRequest } from "../utils/handleApiRequest";
 import { WalletApi } from "../api/api";
+import { useUser } from "./UserContext";
 
 type TransactionContextType = {
     transactions: Transaction[];
@@ -32,6 +33,8 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const [totalPagesByWallet, setTotalPagesByWallet] = useState<Record<string, number>>({});
     const [loading, setLoading] = useState(false);
 
+    const { userId } = useUser()
+
     const loadTransactions = async (walletId?: string) => {
         setLoading(true);
 
@@ -40,7 +43,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({ c
         const res = await handleApiRequest<TransactionResponse>(
             () =>
                 WalletApi()
-                    .get("/transaction", { params: { walletId, page: currentPage, limit: 10 } })
+                    .get("/transaction", { params: { userId, walletId, page: currentPage, limit: 10 } })
                     .then(res => res.data),
             "Transacciones cargadas"
         );
@@ -74,7 +77,7 @@ export const TransactionProvider: React.FC<{ children: React.ReactNode }> = ({ c
         const res = await handleApiRequest<TransactionResponse>(
             () =>
                 WalletApi()
-                    .get("/transaction", { params: { walletId, page: nextPage, limit: 10 } })
+                    .get("/transaction", { params: { userId, walletId, page: nextPage, limit: 10 } })
                     .then(res => res.data),
             ""
         );

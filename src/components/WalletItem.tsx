@@ -10,7 +10,7 @@ type WalletItemProps = Wallet & {
 
 export const WalletItem: React.FC<WalletItemProps> = ({ balance, name, type, accruedInterest, interestRate, onPress }) => {
 
-    const hasInterest = interestRate !== undefined && interestRate !== null
+    const hasInterest = interestRate > 0
 
     return (
         <TouchableOpacity style={cardStyles.card} onPress={onPress}>

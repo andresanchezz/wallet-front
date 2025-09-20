@@ -8,6 +8,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { PaperProvider } from 'react-native-paper';
 import { useFonts } from 'expo-font';
+import { UserProvider } from './src/context/UserContext';
 
 /* import * as SplashScreen from 'expo-splash-screen'; */
 
@@ -24,18 +25,20 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <WalletProvider>
-        <TransactionProvider>
-          <BottomSheetModalProvider>
-            <NavigationContainer>
-              <PaperProvider>
-                <BottomNavigation />
-              </PaperProvider>
-            </NavigationContainer>
-            <Toast />
-          </BottomSheetModalProvider>
-        </TransactionProvider>
-      </WalletProvider>
+      <UserProvider>
+        <WalletProvider>
+          <TransactionProvider>
+            <BottomSheetModalProvider>
+              <NavigationContainer>
+                <PaperProvider>
+                  <BottomNavigation />
+                </PaperProvider>
+              </NavigationContainer>
+              <Toast />
+            </BottomSheetModalProvider>
+          </TransactionProvider>
+        </WalletProvider>
+      </UserProvider>
     </GestureHandlerRootView>
 
   );
